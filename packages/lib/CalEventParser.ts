@@ -14,6 +14,7 @@ import type {
 } from "@calcom/types/Calendar";
 
 import { WEBAPP_URL } from "./constants";
+import { DurationFormatterFactory } from "./durationFormatting/DurationFormatterFactory";
 import isSmsCalEmail from "./isSmsCalEmail";
 import {
   buildPlatformCancelLink,
@@ -574,6 +575,10 @@ export const getRichDescription = (
       },
       t
     ),
+    `${t("duration")}:\n${DurationFormatterFactory.create().format(
+      Math.round((new Date(calEvent.endTime).getTime() - new Date(calEvent.startTime).getTime()) / 60000),
+      t
+    )}`,
     getWho(
       {
         attendees: calEvent.attendees,
